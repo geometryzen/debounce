@@ -51,14 +51,14 @@ const options: RollupOptions[] = [
             },
             {
                 banner,
-                file: pkg.main,
+                file: non_minified_file(pkg.exports['.'].require),
                 format: 'commonjs',
                 sourcemap: true
             },
             {
                 file: pkg.browser,
                 format: 'umd',
-                name: 'MYLIB',
+                name: 'DEBOUNCE',
                 sourcemap: true
             }
         ],
