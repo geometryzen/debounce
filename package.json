@@ -1,6 +1,6 @@
 {
     "name": "@geometryzen/debounce",
-    "version": "0.9.21",
+    "version": "1.0.0",
     "description": "A debounce function for JavaScript and TypeScript",
     "exports": {
         ".": {
