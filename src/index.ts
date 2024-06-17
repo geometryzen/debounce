@@ -1,8 +1,22 @@
 /**
- * Constructs a personalized string that can be used to greet a person.
- * @param name The name of the person receiving the greeting.
- * @returns a greeting string containing the name of the person receiving the greeting.
+ * Create a debounced function from a function that takes arguments and returns a value.
+ * @param callback The function to be de-bounced.
+ * @param timeoutMillis The debounce time in milliseconds.
+ * @returns A function with the same arguments as the callback, but returning a Promise of the callback return value.
  */
-export function greeting(name: string): string {
-    return `Hello, ${name}!`;
+export function debounce<T extends unknown[], U>(callback: (...args: T) => PromiseLike<U> | U, timeoutMillis: number = 500) {
+    let handle: ReturnType<typeof setTimeout>;
+    // let handle: number | undefined
+    return (...args: T): Promise<U> => {
+        clearTimeout(handle);
+        return new Promise<U>((resolve, reject) => {
+            handle = setTimeout(() => {
+                try {
+                    resolve(callback(...args));
+                } catch (e) {
+                    reject(e);
+                }
+            }, timeoutMillis);
+        });
+    };
 }

@@ -1,14 +1,40 @@
-# my-lib
+# debounce
 
-My TypeScript Library Template
+A debounce function for JavaScript and TypeScript.
 
-[![version](https://img.shields.io/npm/v/@geometryzen/my-lib.svg)](https://www.npmjs.com/package/@geometryzen/my-lib) 
+```typescript
+import { debounce } from "@geometryzen/debounce";
 
-[![npm downloads](https://img.shields.io/npm/dm/@geometryzen/my-lib.svg)](https://npm-stat.com/charts.html?package=@geometryzen/my-lib&from=2022-09-01)
+function foo(a: string, b: number) {
+    if (b >= 0) {
+        return a.length + b;
+    } else {
+        throw new Error("b must be positive");
+    }
+}
+
+describe("debounce", function () {
+    it("resolve", async function () {
+        const handler = debounce(foo, 100);
+        const retval = await handler("Hello", 1);
+        expect(retval).toBe(6);
+    });
+    it("reject", async function () {
+        const handler = debounce(foo, 100);
+        try {
+            await handler("Hello", -1);
+            fail();
+        } catch (e) {
+            expect(`${e}`).toBe("Error: b must be positive");
+        }
+    });
+});
+```
+
+[![version](https://img.shields.io/npm/v/@geometryzen/debounce.svg)](https://www.npmjs.com/package/@geometryzen/debounce) 
+
+[![npm downloads](https://img.shields.io/npm/dm/@geometryzen/debounce.svg)](https://npm-stat.com/charts.html?package=@geometryzen/debounce&from=2022-09-01)
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](./CONTRIBUTING.md)
-
-For a STEMCstudio example (click [here](https://www.stemcstudio.com/gists/cbfe438dfe3c91b6e81a4d4a8358545c) to try)
-
